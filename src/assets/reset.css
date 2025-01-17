@@ -6,6 +6,7 @@
 /* 2. Remove default margin */
 * {
   margin: 0;
+  transition: all 0.3s ease-in-out;
 }
 
 body {

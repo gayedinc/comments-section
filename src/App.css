@@ -13,6 +13,10 @@
   color: #313E51;
 }
 
+.post-details {
+  padding-inline: 20px;
+}
+
 .post-details h2 {
   font-size: 28px;
   font-weight: 500;
@@ -78,8 +82,13 @@
   color: #313E51;
 }
 
+.tag {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
 .tag:hover {
   background-color: #ABC1E1;
+  transform: scale(1.1); /* Hafif büyütme */
 }
 
 .post-comments {
@@ -151,6 +160,39 @@
   line-height: 40px;
   color: #313E51;
   margin: 20px;
+}
+
+.post-list li,
+.post-comments li,
+.backBtn button,
+.tag {
+  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.post-list li:hover,
+.post-comments li:hover {
+  background-color: #ABC1E1;
+  transform: translateY(-5px);
+}
+
+.backBtn button:hover {
+  background-color: #d394fa;
+  transform: scale(1.01);
+}
+
+.container {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px); /* Hafif aşağıdan yukarı */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Tablet Start */
