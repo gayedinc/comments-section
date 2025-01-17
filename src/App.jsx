@@ -4,16 +4,22 @@ import './App.css';
 export default function App() {
   const [posts, setPosts] = useState([]); // post dizisini tutan state
   const [selectedPostId, setSelectedPostId] = useState(null); // seçilen postun id değerini tutmak için
+  const [loading, setLoading] = useState(true); // Loading state
 
   // postları çektiğimiz useEffect
   useEffect(() => {
     async function getPosts() {
       const data = await fetch('https://dummyjson.com/posts').then(res => res.json());
       setPosts(data.posts); // postların duracağı state'e postlarımızı gönderiyoruz
+      setLoading(false);
     }
 
     getPosts();
   }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>
