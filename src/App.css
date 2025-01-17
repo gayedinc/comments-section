@@ -137,6 +137,14 @@
   background-color: #d394fa;
 }
 
+.loading {
+  font-size: 40px;
+  font-weight: 300;
+  line-height: 40px;
+  color: #313E51;
+  margin: 20px;
+}
+
 /* Tablet Start */
 
 @media (width > 375px) {

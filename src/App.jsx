@@ -18,7 +18,7 @@ export default function App() {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="loading">Loading...</div>;
   }
 
   return (
@@ -82,7 +82,7 @@ function CommentDetails({ postId, setSelectedPostId }) {
 
   // eğer detay sayfası daha yüklenmediyse
   if (!details) {
-    return <div>Loading...</div>;
+    return <div className="loading">Loading...</div>;
   }
 
   // detay sayfasından ana sayfaya dönebilmek için
