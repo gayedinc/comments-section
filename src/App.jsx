@@ -4,30 +4,28 @@ import './App.css';
 export default function App() {
   const [posts, setPosts] = useState([]); // post dizisini tutan state
   const [selectedPostId, setSelectedPostId] = useState(null); // seçilen postun id değerini tutmak için
-  const [loading, setLoading] = useState(true); // Loading state
+  const [isLoading, setIsLoading] = useState(true); // Loading state
 
   // postları çektiğimiz useEffect
   useEffect(() => {
     async function getPosts() {
       const data = await fetch('https://dummyjson.com/posts').then(res => res.json());
       setPosts(data.posts); // postların duracağı state'e postlarımızı gönderiyoruz
-      setLoading(false);
+      setIsLoading(false);
     }
 
     getPosts();
   }, []);
 
-  if (loading) {
-    return <div className="loading">Loading...</div>;
-  }
-
   return (
     <>
+      {isLoading && <div className="loading">Loading...</div>}
       <div className="container">
         {selectedPostId ? ( // Eğer herhangi bir posta tıklandıysa
           <CommentDetails // detay sayfası açılsın
             postId={selectedPostId}
             setSelectedPostId={setSelectedPostId}
+            setIsLoading={setIsLoading}
           />) :
           (
             <Posts // eğer hiçbir posta tıklanmadıysa ana sayfa yani post list gösterilsin
@@ -63,27 +61,24 @@ function Posts({ posts, setSelectedPostId }) {
 }
 
 // detay sayfasının gösterildiği component
-function CommentDetails({ postId, setSelectedPostId }) {
+function CommentDetails({ postId, setSelectedPostId, setIsLoading }) {
   const [details, setDetails] = useState(null); // postların detaylarını tutan state
   const [showComments, setShowComments] = useState([]); // postların yorumlarını tutan state
 
   // önce post detayını daha sonra yorumları çektiğim useEffect
   useEffect(() => {
     async function getCommentDetails() {
+      setIsLoading(true);
       const postDetail = await fetch(`https://dummyjson.com/posts/${postId}`).then(res => res.json());
       setDetails(postDetail);
 
       const comments = await fetch(`https://dummyjson.com/posts/${postId}/comments`).then(res => res.json());
       setShowComments(comments.comments);
+      setIsLoading(false);
     }
 
     getCommentDetails();
   }, [postId]); // postId değiştiğinde yeniden çalışır
-
-  // eğer detay sayfası daha yüklenmediyse
-  if (!details) {
-    return <div className="loading">Loading...</div>;
-  }
 
   // detay sayfasından ana sayfaya dönebilmek için
   function goHomePage() {
@@ -93,15 +88,15 @@ function CommentDetails({ postId, setSelectedPostId }) {
   return (
     <>
       <div className="post-details">
-        <h2>{details.title}</h2>
-        <p>{details.body}</p>
+        <h2>{details?.title}</h2>
+        <p>{details?.body}</p>
         <div className="tags">
-          {details.tags.map((tag, i) => (
+          {details?.tags.map((tag, i) => (
             <span key={i} className="tag">{tag}</span>
           ))}
         </div>
-        <h5>Likes 👍🏻{details.reactions.likes}</h5>
-        <h5>Dislikes 👎🏻{details.reactions.dislikes}</h5>
+        <h5>Likes 👍🏻{details?.reactions.likes}</h5>
+        <h5>Dislikes 👎🏻{details?.reactions.dislikes}</h5>
       </div>
       <div className="post-comments">
         <ul>
