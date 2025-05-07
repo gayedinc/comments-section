@@ -56,3 +56,8 @@ a{
 html, body {
   height: 100%;
 }
+
+::selection {
+  background-color: #a729f5;
+  color: #ffffff;
+}
